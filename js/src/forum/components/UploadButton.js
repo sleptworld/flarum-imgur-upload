@@ -96,7 +96,7 @@ export default class UploadButton extends Component {
         formData.append('image', file);
 
         $.ajax({
-            url: 'https://api.imgur.com/3/image',
+            url: 'https://www.nuisters.info/imgur-api/3/image',
             headers: {
                 'Authorization': 'Client-ID ' + app.forum.attribute('imgur-upload.client-id')
             },
@@ -129,18 +129,20 @@ export default class UploadButton extends Component {
     }
 
     buildEmbedCode(imageUrl, isLarge) {
-        let previewUrl = (isLarge ? this.previewUrl(imageUrl) : imageUrl);
+
+        let lastImageUrl = "https://www.nuisters.info/imgur/"+imageUrl.split("/")[1];
+        let previewUrl = (isLarge ? this.previewUrl(lastImageUrl) : lastImageUrl);
         let embedType = app.forum.attribute('imgur-upload.embed-type');
 
         if (embedType === 'full-with-link') {
-            return `[URL=${imageUrl}][IMG]${imageUrl}[/IMG][/URL]\n`;
+            return `[URL=${lastImageUrl}][IMG]${lastImageUrl}[/IMG][/URL]\n`;
         } else if (embedType === 'full-without-link') {
-            return `[IMG]${imageUrl}[/IMG]\n`;
+            return `[IMG]${lastImageUrl}[/IMG]\n`;
         } else if (embedType === 'preview-without-link') {
             return `[IMG]${previewUrl}[/IMG]\n`;
         } else {
             // Preview with link (default case)
-            return `[URL=${imageUrl}][IMG]${previewUrl}[/IMG][/URL]\n`;
+            return `[URL=${lastImageUrl}][IMG]${previewUrl}[/IMG][/URL]\n`;
         }
     }
 
