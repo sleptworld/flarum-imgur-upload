@@ -130,7 +130,7 @@ export default class UploadButton extends Component {
 
     buildEmbedCode(imageUrl, isLarge) {
 
-        let lastImageUrl = "https://www.nuisters.info/imgur/"+imageUrl.split("/")[1];
+        let lastImageUrl = "https://www.nuisters.info/imgur/"+imageUrl.split("/").pop();
         let previewUrl = (isLarge ? this.previewUrl(lastImageUrl) : lastImageUrl);
         let embedType = app.forum.attribute('imgur-upload.embed-type');
 
